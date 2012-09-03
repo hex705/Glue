@@ -1,0 +1,20 @@
+Glue           KEYWORD1
+
+create	       KEYWORD2
+
+add            KEYWORD2
+
+getPackage     KEYWORD2
+debug	       KEYWORD2
+length	       KEYWORD2
+
+setStartByte	KEYWORD2
+setEndByte  	KEYWORD2
+setDelimiter	KEYWORD2
+
+getStartByte	KEYWORD2
+getEndByte  	KEYWORD2
+getDelimiter	KEYWORD2
+
+
+
