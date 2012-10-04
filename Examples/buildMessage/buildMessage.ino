@@ -13,7 +13,7 @@ void setup() {
 void loop(){
   
  elmers.clear();
- emlmer.add(23);
+ elmer.add(23);
  elmers.add(4.5);
  elmers.add("steve is silly");
  Serial.println( elmers.getPackage()) ;
