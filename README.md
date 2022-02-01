@@ -1,4 +1,4 @@
-Glue  (ReadMe)
+#Glue  (ReadMe)
 =====  
 
 *Glue* is a simple MESSAGE building library for Arduino.
@@ -9,14 +9,36 @@ As of August 2012, Glue is an alpha release.  It is tested and appears stable.  
 
 [https://github.com/hex705/Glue/issues](https://github.com/hex705/Glue/issues "Issues")
 
+##Jan 2022 UPDATES:
+
+ -- glue updated to include attachment to streams.
+-- renamed some functions as a result of this
+-- create is now for message creation
+
+-- begin is for initializing the object
 
 
-Quick Start
+#Quick Start
 ---------------
+
+## Arduino Library Manager
+
+download the archive in .zip format.
+[https://github.com/hex705/Glue](https://github.com/hex705/Glue "Download")
+
+2. Move archive to desktop or similar.
+
+3. in Arduino --> Sketch --> include Library --> Add .ZIP library
+
+4. nav to archive from (1) above and select.
+
+done.
+
+## Manual Install:
 
 1. Obtain archive (.zip) @  [https://github.com/hex705/Glue](https://github.com/hex705/Glue "Download")
 
-2. Unzip and (if needed) rename folder Glue 
+2. Unzip and (if needed) rename folder Glue
 
 3. Copy folder (OSX) into:   ~/Documents/Arduino/libraries
 
@@ -25,7 +47,7 @@ Quick Start
 Downloaded folder contains library, and examples.
 
 
-Usage
+#Usage
 -----
 
 GLUE accepts Strings, ints and floats (in any order) as payload ELEMENTS and assembles them into a delimited package.  Packages are prefixed with a START_BYTE and terminated with an END\_BYTE.
@@ -52,7 +74,7 @@ Include the Glue library.
 
 		#include <Glue.h>
 
-		
+
 The include statement can be added via menu:: Sketch --> Import Library --> Glue
 
 ###Instantiate
@@ -70,32 +92,34 @@ Glue object must be declared at the top of your sketch:
 
 ###Create a new message -- in setup()
 
-	void setup() {
+*Update Jan 2022*
 
-		glue.create( );  // will instantiate with defaults 
+	void setup() {
+    Serial.begin (BAUD);
+		glue.begin(Serial);  // will instantiate with defaults, using Serial Stream
 
 	}
 
 
 ####Setting Payload Parameters
 
-	glue.setStartByte( CHAR ); 
-    glue.setEndByte  ( CHAR );
-    glue.setDelimiter( CHAR );   
-   
+	glue.setStartByte( CHAR );
+  glue.setEndByte  ( CHAR );
+  glue.setDelimiter( CHAR );   
+
 
 ####Getting Payload Parameters
 
-	char sb = glue.getStartByte( ); 
-    char eb = glue.getEndByte  ( );
-    char de = glue.getDelimiter( );
+	char sb = glue.getStartByte( );
+  char eb = glue.getEndByte  ( );
+  char de = glue.getDelimiter( );
 
 
 ###Build Message -- in loop() or in a function.
 
 First clear any old messages.
 
-	glue.clear();  // empty old data frm the glue buffer
+	glue.clear();  // empty old data from the glue buffer
 
 Now add ELEMENTS to the MESSAGE
 
@@ -112,39 +136,48 @@ Elements are added to the MESSAGE package incrementally.  First ELEMENT is zero 
 
 ###Sending a MESSAGE
 
-Completed messages can be obtained from the glue object with the following call.
+Completed messages can be obtained from the glue object with a call to:
+
+    glue.getPackage();
+
+AN end byte can be added manually with:
+    glue.endPackage();
 
 		String package = glue.getPackage();		// returns the package with delimiters, header and tail
 
-The string package can now be send with a SERIAL.write(package); or network (client or server)  . write(package);
+The string package can now be send with a SERIAL.println (package); or network (client or server)  . write(package);
 depending on use context.
+
+
 
 ### Example of usage (context == Serial)
 
 	 void loop () {
 
 		glue.clear();      // clear
-		
+
 		glue.add(23);		// add elements
 		glue.add(4.5f);
 		glue.add("Example string");
-	
-	 	Serial.println( glue.getPackage()) ; //get package and send it out serial port
-	
 
-HISTORY
+	 	Serial.println( glue.getPackage()) ; //get package and send it out serial port
+
+
+# HISTORY
 =======
-## OCTOBER, 2012:
+###OCTOBER, 2012:
 Added readme.md
 
-##August, 2012:
+### August, 2012:
 First version uploaded to GITHUB
 
-
+### January 2022:
+--connect streams
+-- update function calls 
 
 ____
-  
-  
+
+
 
 TO DO:
 ------
@@ -154,7 +187,4 @@ TO DO:
  * tie to Stream not serial -- enabling use with Ethernet Shield
 		Note: this will change the instantiation and API
 
- * full documentation 
-
-
-
+ * full documentation

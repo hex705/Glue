@@ -1,6 +1,6 @@
 //
 //  Glue.cpp
-//  
+//
 //
 //  Created by steve daniels on 12-08-19.
 //  Copyright (c) 2012 __ribosome.ca__. All rights reserved.
@@ -17,22 +17,30 @@
 #include <Glue.h>
 #include <WString.h> // String
 
+Glue::Glue(){;}
 
+void Glue::begin(Stream &s){
+	theStream = &s;
+	init('*','#',',');
+}
 
+void Glue::begin(Stream &s,char _start_byte, char _end_byte, char _delimiter){
+	theStream = &s;
+		init( _start_byte,  _end_byte,  _delimiter);
+}
 
-void Glue::create( )
+void Glue::begin( )
 {
-	
 	Glue::init ('*','#',',');
 }
 
-void Glue::create(char s, char e, char d) {
+void Glue::begin(char s, char e, char d) {
 	Glue::init (s,e,d);
 }
 
 
 void Glue::init(char _start_byte, char _end_byte, char _delimiter ) {
-	
+
 	START_BYTE = _start_byte;
 	END_BYTE   = _end_byte;
 	DELIMITER  = _delimiter;
@@ -40,6 +48,14 @@ void Glue::init(char _start_byte, char _end_byte, char _delimiter ) {
 	clear();
 }
 
+void Glue::create(){
+	clear();
+}
+
+void Glue::create(String s){
+	clear();
+	add(s);
+}
 
 void Glue::clear() {
 
@@ -48,8 +64,10 @@ void Glue::clear() {
 
 }
 
+
+
 void Glue::add(String stringToAdd) {
-   
+
    glueMessage += stringToAdd ;
    glueMessage += DELIMITER ;
 
@@ -57,7 +75,7 @@ void Glue::add(String stringToAdd) {
 
 
 void Glue::add(int i) {
-	
+
   glueMessage += i ;
   glueMessage += DELIMITER ;
 
@@ -66,18 +84,18 @@ void Glue::add(int i) {
 
 
 void Glue::add(float f) {
-	
+
 //	glueMessage += f ;
 //	glueMessage += DELIMITER ;
 
 // after mem -- Arduino forum
 // http://www.arduino.cc/cgi-bin/yabb2/YaBB.pl?num=1200716061
-  
+
     int intPart = (int)f;
 	glueMessage += intPart ;
 	glueMessage += '.';
-    
-    int decimalPart = (f - (int)f) * 100;
+
+    int decimalPart = (f - (int)f) * 1000;
 	glueMessage += decimalPart;
 	glueMessage += DELIMITER ;
 
@@ -89,25 +107,28 @@ void Glue::add(float f) {
 
 
 void Glue::send(){
-	// impliment here -- or not -- to keep generic use getPacakge
-	
-	// how do i attach this to the serial port?
-	//Serial.println ("I wish I could send");
+	 endPackage();
+   theStream->println(getPackage());
 }
 
 String Glue::debug() {
-	
+
 	return glueMessage+END_BYTE;
 }
 
 String Glue::getPackage () {
 	// closes the package with end byte then returns full string
+	return glueMessage;
+}
+
+
+String Glue::endPackage(){
 	glueMessage += END_BYTE ;
 	return glueMessage;
 }
 
 int Glue::length() {
-	
+
 	return glueMessage.length();
 
 } // end length
@@ -123,14 +144,14 @@ int Glue::setStartByte(char s) {
 int Glue::setEndByte(char e) {
   END_BYTE = e;
   return 1;
-  
+
 }
 
 
 int Glue::setDelimiter(char d) {
   DELIMITER = d;
   return 1;
-  
+
 }
 
 char Glue::getStartByte( ) {
@@ -146,8 +167,3 @@ char Glue::getEndByte( ) {
 char Glue::getDelimiter( ) {
    return DELIMITER;
 }
-
-
-
-
-

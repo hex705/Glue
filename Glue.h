@@ -1,6 +1,6 @@
 //
 //  Glue.h
-//  
+//
 //
 //  Created by steve daniels on 12-08-19.
 //  Copyright (c) 2012 __ribosome.ca__. All rights reserved.
@@ -22,44 +22,55 @@
 
 class Glue
 {
-	
-public: 
-		
-    String glueMessage ; 
-   
+
+public:
 	// constructors
-	void create( );
-	void create (char,char,char);
+	Glue();
+
+  String glueMessage ;
+
+	// init
+	void begin( );
+	void begin (char,char,char);
+	void begin( Stream & );
+	void begin ( Stream &, char,char,char);
+
+  void create();
+	void create(String);
 	void clear();
 
 	// glue functions
 	void add( String );
 	void add( int ) ;
 	void add( float ) ;
-	
+	String endPackage();
+
 	String getPackage ( );
+
 	String debug ( );
-	int length( ); 
+	int length( );
 	void send( );  // remove ??
 
  	// setters
 	int setStartByte( char s );
 	int setEndByte( char e );
 	int setDelimiter( char d );
- 
+
 	// getters
 	char getStartByte( );
 	char getEndByte( ) ;
 	char getDelimiter( ) ;
-  
+
 
 private:
-	
+
+	Stream *theStream;
+
 	// internal vars & parsing variables
 	char START_BYTE;
 	char END_BYTE  ;
-	char DELIMITER ;  
-	
+	char DELIMITER ;
+
 	void init(char,char,char);
 
 }; // end of class
