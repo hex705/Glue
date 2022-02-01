@@ -2,9 +2,9 @@
 // recieves a message from serial, and sends it back reformatted.
 // needs scissors and glue
 
-//
+//https://github.com/hex705/Glue
 
-//
+//https://github.com/hex705/Scissors
 
 
 /* paste entire line below into serial monitor once uploaded
