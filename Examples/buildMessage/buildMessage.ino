@@ -1,4 +1,4 @@
-// simple exmaple of building a package with 
+// simple example of building a SERIAL package with 
 // GLUE library
 
 #include <Glue.h>
@@ -7,7 +7,8 @@ Glue elmers;
 
 void setup() {
   Serial.begin(9600);
-  while(!Serial);
+  while(!Serial); // blocks-do not use in production code
+
   elmers.begin(Serial);
 }
 

@@ -7,7 +7,6 @@
 //
 
 
-
 #if defined(ARDUINO) && ARDUINO >= 100
 #include "Arduino.h"
 #else
@@ -65,7 +64,6 @@ void Glue::clear() {
 }
 
 
-
 void Glue::add(String stringToAdd) {
 
    glueMessage += stringToAdd ;
@@ -80,7 +78,6 @@ void Glue::add(int i) {
   glueMessage += DELIMITER ;
 
 }
-
 
 
 void Glue::add(float f) {
@@ -101,45 +98,45 @@ void Glue::add(float f) {
 
   //Serial.println( abs(temp) );
 
-
 }
 
+// add the END_BYTE
+void Glue::endPackage(){
+	glueMessage += END_BYTE ;
+}
 
-
+// send the message using STREAM interface
 void Glue::send(){
-	 endPackage();
+   endPackage();
    theStream->println(getPackage());
 }
 
+// get the package in its current state
+// same as debug() below
+String Glue::getPackage() {
+	// returns full string 
+	return glueMessage;
+}
+
+// use this to see message contents 
+// same as getPackage() above
 String Glue::debug() {
-
-	return glueMessage+END_BYTE;
-}
-
-String Glue::getPackage () {
-	// closes the package with end byte then returns full string
-	return glueMessage;
+	return glueMessage;  // 2024 -- take the end byte away! 
+	//return glueMessage+END_BYTE; // why are you doing the +END_BYTE ?
+		//return glueMessage; // should it not be this ?  
 }
 
 
-String Glue::endPackage(){
-	glueMessage += END_BYTE ;
-	return glueMessage;
-}
 
 int Glue::length() {
-
 	return glueMessage.length();
-
 } // end length
 
-
-
+// setters
 int Glue::setStartByte(char s) {
   START_BYTE = s;
   return 1;
 }
-
 
 int Glue::setEndByte(char e) {
   END_BYTE = e;
@@ -147,13 +144,13 @@ int Glue::setEndByte(char e) {
 
 }
 
-
 int Glue::setDelimiter(char d) {
   DELIMITER = d;
   return 1;
 
 }
 
+// getters
 char Glue::getStartByte( ) {
    return START_BYTE;
 }

@@ -7,6 +7,9 @@
 //https://github.com/hex705/Scissors
 
 
+// this example uses the .listen() interface of scissors
+// it could be done with .poll() as well. 
+
 /* paste entire line below into serial monitor once uploaded
    *123,45.678,EOM,#
 */
@@ -22,15 +25,17 @@ void setup() {
   Serial.begin(9600);
   cut.begin(Serial);
   elmers.begin(Serial);
-  Serial.println("waiting for message");
-  Serial.println("paste following into monitor above");
+
+  Serial.println(__FILE__);
+  Serial.println("Waiting for message");
+  Serial.println("Paste following into Serial monitor");
   Serial.println("*123,45.678,EOM,#");
 }
 
 void loop() {
   // wait for message
   if(cut.listen()>0){
-    // have a message unpack it 
+    // have a message unpack it
     int    i = cut.getInt(0);
     float  f = cut.getFloat(1);
     String s = cut.getString(2);
@@ -43,12 +48,13 @@ void loop() {
     Serial.println();
 
     // repackage with glue
+    // note flip order of variables to know we changed it
     Serial.println("Glue repackaged to :: ");
     elmers.create();
     elmers.add(s);
     elmers.add(f);
     elmers.add(i);
-    elmers.send();
+    elmers.send(); // adds end byte and prints to monitor
   }
 
 }

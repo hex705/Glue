@@ -2,7 +2,7 @@ Glue	KEYWORD1
 
 create	KEYWORD2
 
-add	KEYWORD2
+add    KEYWORD2
 
 getPackage	KEYWORD2
 debug	KEYWORD2

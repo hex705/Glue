@@ -31,21 +31,22 @@ public:
 
 	// init
 	void begin( );
-	void begin (char,char,char);
+	void begin ( char,char,char );
 	void begin( Stream & );
-	void begin ( Stream &, char,char,char);
+	void begin ( Stream &, char,char,char );
 
-  void create();
-	void create(String);
+    // start (create) a message
+    void create();
+	void create( String );
 	void clear();
 
 	// glue functions
 	void add( String );
 	void add( int ) ;
 	void add( float ) ;
-	String endPackage();
+	void endPackage();
 
-	String getPackage ( );
+	String getPackage();
 
 	String debug ( );
 	int length( );
@@ -71,7 +72,7 @@ private:
 	char END_BYTE  ;
 	char DELIMITER ;
 
-	void init(char,char,char);
+	void init( char,char,char );
 
 }; // end of class
 
